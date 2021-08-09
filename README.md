@@ -63,4 +63,5 @@ res_4 → <br>
 ![選択後](https://github.com/tabinohito/Power-calculation-tool.io/blob/images/images/選択済み.jpg)
 
 - csvファイルダウンロード　<br>
-記入済みのデータをcsv形式でダウンロードする
+記入済みのデータをcsv形式でダウンロードする <br>
+その際、横のテキストボックスでファイル名を指定できる <br>
