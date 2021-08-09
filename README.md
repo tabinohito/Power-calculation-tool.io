@@ -62,5 +62,5 @@ res_4 → <br>
 以下のように、データを選択し、削除ボタンを押す
 ![選択後](https://github.com/tabinohito/Power-calculation-tool.io/blob/images/images/選択済み.jpg)
 
-- csvファイルダウンロード
+- csvファイルダウンロード　<br>
 記入済みのデータをcsv形式でダウンロードする
