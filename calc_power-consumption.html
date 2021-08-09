@@ -1,0 +1,157 @@
+<html>    
+<head>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+</script>
+
+</head>
+<header>
+    
+</header>
+<body>
+
+センサーモジュールの消費電力を計算します。<br>
+<br>
+<b>センサー１</b>
+電源電圧 → <input id='vol_1' type=number value=1> [V] <br>
+動作時消費電流 → <input id='cur_active_1' type=number value=1> [mA] <br>
+動作回数/分 → <input id='num_1' type=number value=60> [回] <br>
+動作時間/回  → <input id='t_active_1' type=number value=1000> [msec] <br>
+<!--非動作時消費電流 → <input id='cur_sleep_1' type=number value=1> [mA] <br> -->
+<br>
+<b>センサー２</b>
+電源電圧 → <input id='vol_2' type=number value=1> [V] <br>
+動作時消費電流 → <input id='cur_active_2' type=number value=1> [mA] <br>
+動作回数/分 → <input id='num_2' type=number value=60> [回] <br>
+動作時間/回  → <input id='t_active_2' type=number value=1000> [msec] <br>
+<!--非動作時消費電流 → <input id='cur_sleep_1' type=number value=1> [mA] <br> -->
+<br>
+<b>センサー３</b>
+電源電圧 → <input id='vol_3' type=number value=1> [V] <br>
+動作時消費電流 → <input id='cur_active_3' type=number value=1> [mA] <br>
+動作回数/分 → <input id='num_3' type=number value=60> [回] <br>
+動作時間/回  → <input id='t_active_3' type=number value=1000> [msec] <br>
+<!--非動作時消費電流 → <input id='cur_sleep_1' type=number value=1> [mA] <br> -->
+<br>
+
+<b>
+平均消費電力１ → <span id='pwr_ave_1'></span> [mW] <br>
+平均消費電力２ → <span id='pwr_ave_2'></span> [mW] <br>
+平均消費電力３ → <span id='pwr_ave_3'></span> [mW] <br>
+平均消費電力合計 → <span id='pwr_ave'></span> [mW] <br>
+</b>
+<br>
+<input id='cal_button' type=button value='計算'> <br>
+<br>
+
+pwr_1 → <span id='pwr_1'></span> <br>
+pwr_num_1 → <span id='pwr_num_1'></span> <br>
+pwr_sum_1 → <span id='pwr_sum_1'></span> <br>
+res_4 → <span id='pwr_ave_1'></span> <br>
+
+
+<b>
+説明<br>
+</b>
+※計算結果から生じる損害について、当ページの編集者は一切の責任を持ちません。
+
+<script>
+$(function() {
+    let add = function(a, b) {
+        return Number(a) + Number(b);
+    };    
+    let add4 = function(a, b, c, d) {
+        return Number(a) + Number(b) + Number(c) + Number(d);
+    };    
+    let sub = function(a, b) {
+        return Number(a) - Number(b);
+    };
+    let div = function(a, b) {
+        return Number(a) / Number(b);
+    };
+    let mul = function(a, b) {
+        return Number(a) * Number(b);
+    };
+
+    $('#cal_button').click(function() {
+        
+        a = $('#vol_1').val();
+        b = $('#cur_active_1').val();
+        res_1 = mul(a,b);
+        $('#pwr_1').text(res_1.toFixed(1));
+
+        a = res_1;
+        b = $('#num_1').val();
+        res_2 = mul(a,b);
+        $('#pwr_num_1').text(res_2.toFixed(1));
+
+        a = res_2;
+        b = $('#t_active_1').val()/1000;
+        res_3 = mul(a,b);
+        $('#pwr_sum_1').text(res_3.toFixed(1));
+
+        a = res_3;
+        b = 60;
+        res_4 = div(a,b);
+        $('#pwr_ave_1').text(res_4.toFixed(3));
+
+
+        a = $('#vol_2').val();
+        b = $('#cur_active_2').val();
+        res_2_1 = mul(a,b);
+        $('#pwr_2').text(res_2_1.toFixed(1));
+
+        a = res_2_1;
+        b = $('#num_2').val();
+        res_2_2 = mul(a,b);
+        $('#pwr_num_2').text(res_2_2.toFixed(1));
+
+        a = res_2_2;
+        b = $('#t_active_2').val()/1000;
+        res_2_3 = mul(a,b);
+        $('#pwr_sum_2').text(res_2_3.toFixed(1));
+
+        a = res_2_3;
+        b = 60;
+        res_2_4 = div(a,b);
+        $('#pwr_ave_2').text(res_2_4.toFixed(3));
+
+
+        a = $('#vol_3').val();
+        b = $('#cur_active_3').val();
+        res_3_1 = mul(a,b);
+        $('#pwr_3').text(res_3_1.toFixed(1));
+
+        a = res_3_1;
+        b = $('#num_3').val();
+        res_3_2 = mul(a,b);
+        $('#pwr_num_3').text(res_3_2.toFixed(1));
+
+        a = res_3_2;
+        b = $('#t_active_3').val()/1000;
+        res_3_3 = mul(a,b);
+        $('#pwr_sum_3').text(res_3_3.toFixed(1));
+
+        a = res_3_3;
+        b = 60;
+        res_3_4 = div(a,b);
+        $('#pwr_ave_3').text(res_3_4.toFixed(3));
+
+        // a = ;
+        // b = ;
+        // c = ;
+        // d = ;
+
+        // res_pwr_ave = add4(res_1_4,res_2_4,res_3_4,0);
+        // $('#pwr_ave').text(res_pwr_ave.toFixed(3));
+
+    });
+});
+</script>
+
+</body>
+<footer>
+
+</footer>
+
+</html>
