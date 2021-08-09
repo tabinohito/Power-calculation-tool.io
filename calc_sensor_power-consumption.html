@@ -69,7 +69,7 @@
             var data_array = new data(document.getElementById("voltage").value,document.getElementById("motion_current").value * 1000,document.getElementById("sleep_current").value * 1000,document.getElementById("count").value,document.getElementById("time").value);
             result_array.push(data_array);
             update_array();
-            var addData = {voltage:data_array.voltage,motion_current:data_array.motion_current,sleep_current:data_array.sleep_current,count:data_array.count,time:data_array.time,Wh:data_array.ElectoricPower()*1000,Wh_sum:update_average_sum(new_array.length)*1000};
+            var addData = {voltage:data_array.voltage,motion_current:data_array.motion_current,sleep_current:data_array.sleep_current,count:data_array.count,time:data_array.time,Wh:data_array.ElectoricPower(),Wh_sum:update_average_sum(new_array.length)};
             $('#result').addRowData(undefined, addData);
 
             clear("voltage");clear("motion_current");clear("sleep_current");clear("count");clear("time");
@@ -147,7 +147,7 @@
                 cnt = cnt + 1;
                 var rownum = "jqg"+ (i + 1);
                 var colname = "Wh_sum";  //price列
-                var value = update_average_sum(cnt) * 1000;
+                var value = update_average_sum(cnt);
                 $("#result").jqGrid('setCell',rownum, colname, value);
             }
         }
