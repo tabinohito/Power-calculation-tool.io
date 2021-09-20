@@ -48,20 +48,20 @@
   </head>
 
   <body>
-    <h2>センサモジュールの消費電力を計算</h2>
-    <h4>電源電圧</h4>
-    <input type = "number" id = "voltage"> [V] 
-    <h4>動作時消費電流</h4>
-    <input type = "number" id = "motion_current"> [mA]
-    <h4>静止時消費電流</h4>
-    <input type = "number" id = "sleep_current"> [mA]
-    <h4>動作回数/分</h4>
-    <input type = "number" id = "count"> [回]
-    <h4>動作時間/回</h4>
-    <input type = "number" id = "time"> [msec] 
+    <h2 style="font-size:200%">センサモジュールの消費電力を計算</h2>
+    <h4 style="font-size:150%">電源電圧</h4>
+    <input type = "number" id = "voltage" style="width:8%;padding:5px;font-size:30px;"> [V] 
+    <h4 style="font-size:150%">動作時消費電流</h4>
+    <input type = "number" id = "motion_current" style="width:8%;padding:5px;font-size:30px;"> [mA]
+    <h4 style="font-size:150%">静止時消費電流</h4>
+    <input type = "number" id = "sleep_current" style="width:8%;padding:5px;font-size:30px;"> [mA]
+    <h4 style="font-size:150%">動作回数/分</h4>
+    <input type = "number" id = "count" style="width:8%;padding:5px;font-size:30px;"> [回]
+    <h4 style="font-size:150%">動作時間/回</h4>
+    <input type = "number" id = "time" style="width:8%;padding:5px;font-size:30px;"> [msec] 
     <p>
-        <input type="button" id = "add_sensor" value="計算" onclick="add_();" />
-        <input type="button" id="clear" value="消去" onclick="remove_();">
+        <input type="button" id = "add_sensor"  style="width:8%;padding:5px;font-size:30px;" value="計算" onclick="add_();" />
+        <input type="button" id="clear"  style="width:8%;padding:5px;font-size:30px;" value="消去" onclick="remove_();">
     </p>
     <!--テーブル生成位置-->
     <div id ='maintable'>
@@ -231,16 +231,6 @@
     </script>
     <script>
       class data{
-        // constructor(voltage,motion_current,sleep_current,count,time){
-        //     this.voltage = voltage;           
-        //     this.motion_current = motion_current / 1000; //mA -> A
-        //     this.sleep_current = sleep_current / 1000; //mA -> A
-        //     this.count = count;//1秒あたりの動作回数
-        //     this.time = time / 1000; //msec -> sec
-        //     this.motion_time = (this.time * this.count);//動作時間
-        //     this.sleep_time =  60 - (this.time * this.count);//静止時間
-        // };
-
         constructor(obj){
             this.voltage = obj["電源電圧"];           
             this.motion_current = obj["動作時消費電流"] / 1000; //mA -> A
