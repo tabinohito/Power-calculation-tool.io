@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>センサ電力計算ツール</title>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+<script src="https://js.cybozu.com/jqgrid/v5.1.1/js/jquery.jqGrid.min.js"></script>
+<script src="https://js.cybozu.com/jqgrid/v5.1.1/js/i18n/grid.locale-ja.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="https://js.cybozu.com/jqgrid/v5.1.1/css/ui.jqgrid.css">
+</head>
+<body>
+    <h1>センサモジュールの消費電力を計算</h1>
+    <h3>電源電圧</h3>
+    <input type = "number" id = "voltage"> [V] 
+    <h3>動作時消費電流</h3>
+    <input type = "number" id = "motion_current"> [mA]
+    <h3>静止時消費電流</h3>
+    <input type = "number" id = "sleep_current"> [mA]
+    <h3>動作回数/分</h3>
+    <input type = "number" id = "count"> [回]
+    <h3>動作時間/回</h3>
+    <input type = "number" id = "time"> [msec] 
+    <p>
+        <input type="button" id = "add_sensor" value="計算" onclick="view_input();" />
+        <input type="button" id="clear" value="消去" onclick="clear_select();">
+    </p>
+    <table id="result"></table>
+
+    <form action="#" method="post">
+        <p>ファイル名：<br>
+        <input type="text" id = "file_name" value="test">
+        <b><a id="download" href="#" onclick="handleDownload()">csvファイルダウンロード</a></b></p>
+    </form>
+</body>
+</html>
+
+<script>
+    var result_array = [];
+    var new_array = [];
+    var clear_row_list = [];
+    var clear_array = [];
+
+    class data{
+        constructor(voltage,motion_current,sleep_current,count,time){
+            this.voltage = voltage;           
+            this.motion_current = motion_current / 1000; //mA -> A
+            this.sleep_current = sleep_current / 1000; //mA -> A
+            this.count = count;//1秒あたりの動作回数
+            this.time = time / 1000; //msec -> sec
+            this.motion_time = (this.time * this.count);//動作時間
+            this.sleep_time =  60 - (this.time * this.count);//静止時間
+        };
+
+        ElectoricPower_motion(){ return this.voltage * this.motion_current; };
+        ElectoricPower_all_motion(){ return this.ElectoricPower_motion() * this.motion_time; };
+        ElectoricPowerHour_motion(){ return this.ElectoricPower_all_motion() / 60; };
+
+        ElectoricPower_sleep(){ return this.voltage * this.sleep_current; };
+        ElectoricPower_all_sleep(){ return this.ElectoricPower_sleep() * this.sleep_time; };
+        ElectoricPowerHour_sleep(){ return this.ElectoricPower_all_sleep() / 60; };
+
+        ElectoricPower(){  return ((this.ElectoricPower_all_motion() + this.ElectoricPower_all_sleep()) / 60); };
+    };
+
+    function view_input(){
+        if(is_fill_textbox("voltage") && is_fill_textbox("motion_current") && is_fill_textbox("sleep_current") && is_fill_textbox("count")  && is_fill_textbox("time")){
+            var data_array = new data(document.getElementById("voltage").value,document.getElementById("motion_current").value * 1000,document.getElementById("sleep_current").value * 1000,document.getElementById("count").value,document.getElementById("time").value);
+            result_array.push(data_array);
+            update_array();
+            var addData = {voltage:data_array.voltage,motion_current:data_array.motion_current,sleep_current:data_array.sleep_current,count:data_array.count,time:data_array.time,Wh:data_array.ElectoricPower(),Wh_sum:update_average_sum(new_array.length)};
+            $('#result').addRowData(undefined, addData);
+
+            clear("voltage");clear("motion_current");clear("sleep_current");clear("count");clear("time");
+        }
+        else{
+            alert("未入力項目があります");
+        }
+    };
+
+    window.onload = function(){
+        var dt = [
+
+        ]
+    
+        $("#result").jqGrid({
+            data: dt,
+            datatype: 'local',
+            colNames: ['電源電圧 [V]','動作時消費電流 [mA]','静止時消費電流 [mA]','動作回数/分 [回]','動作時間/回 [sec]','平均消費電力 [mW]','平均消費電力量合計 [mW]'],
+            colModel:[
+                {index:'voltage', name:'voltage', width:'200px', align:'center'},
+                {index:'motion_current', name:'motion_current', width:'200px', align:'center'},
+                {index:'sleep_current', name:'sleep_current', width:'200px', align:'center'},
+                {index:'count', name:'count', width:'200px', align:'center'},
+                {index:'time', name:'time', width:'200px', align:'center'},
+                {index:'Wh', name:'Wh', width:'200px', align:'center'},
+                {index:'Wh_sum', name:'Wh_sum', width:'200px', align:'center'}
+            ],
+            height:'auto',
+            caption:'入力データ一覧',
+            shrinkToFit:false,  //列幅を自動調整しない
+            multiselect:true,
+            onSelectRow:select
+            }
+        );    
+    };
+
+    function update_average_sum(count){
+        var sum = 0;
+        for(var i = 0;i < count;i++){
+            sum = sum + new_array[i].ElectoricPower();
+        }
+        return sum;
+    };
+
+    function is_fill_textbox(id){
+        if(document.getElementById(id).value == '') {
+            return false; 
+        }
+        return true;
+    };
+
+    function clear(id){
+       document.getElementById(id).value = '';
+    };
+
+    function clear_select(){
+        clear_array = [];
+        for(var i = 0;i < clear_row_list.length;i++){
+            $('#result').delRowData(clear_row_list[i]);
+            clear_array.push(parseFloat((clear_row_list[i].replace(/[^0-9]/g, ''))) - 1);
+        }
+
+        update_array();
+
+        var cnt = 0;
+        for(var i = 0;i < result_array.length;i++){
+            var update_flag = true;
+            for(var j = 0;j < clear_array.length;j++){
+                //削除した中にあったとき
+                if(i == clear_array[j]){
+                    update_flag = false;
+                    break;
+                }
+            }
+            if(update_flag){
+                cnt = cnt + 1;
+                var rownum = "jqg"+ (i + 1);
+                var colname = "Wh_sum";  //price列
+                var value = update_average_sum(cnt);
+                $("#result").jqGrid('setCell',rownum, colname, value);
+            }
+        }
+
+    };
+
+    function update_array(){
+        new_array = [];
+        for(var i = 0;i < result_array.length;i++){
+            var update_flag = true;
+            for(var j = 0;j < clear_array.length;j++){
+                //削除した中にあったとき
+                if(i == clear_array[j]){
+                    update_flag = false;
+                    break;
+                }
+            }
+            if(update_flag){
+                new_array.push(result_array[i]);
+            }
+        }
+    };
+
+    function select(rowid, status, e){  //行が選択された直後に呼ばれる
+        if(status){
+            clear_row_list.push(rowid);
+        }
+        else{
+            var idx = clear_row_list.indexOf(rowid);
+            if(idx >= 0){
+                clear_row_list.splice(idx, 1); 
+            }
+        }
+    };
+
+    //ここからCSV出力＆ダウンロード
+    function handleDownload() {
+        var bom = new Uint8Array([0xEF, 0xBB, 0xBF]);//文字コードをBOM付きUTF-8に指定
+        var table = document.getElementById("result");//id=table1という要素を取得
+        var table_title = $("#result").jqGrid("getGridParam", "colNames");
+        var data_csv="";//ここに文字データとして値を格納していく
+
+        for(var i = 1;  i < table_title.length; i++){
+            data_csv += table_title[i];
+            if(i == (table_title.length - 1)) data_csv += "\n";//行終わりに改行コードを追加
+            else data_csv += ",";//セル値の区切り文字として,を追加
+        }
+
+        for(var i = 1;  i < table.rows.length; i++){
+          for(var j = 1; j < table.rows[i].cells.length; j++){
+            data_csv += table.rows[i].cells[j].innerText;//HTML中の表のセル値をdata_csvに格納
+            if(j == table.rows[i].cells.length-1) data_csv += "\n";//行終わりに改行コードを追加
+            else data_csv += ",";//セル値の区切り文字として,を追加
+          }
+        }
+        
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([ bom, data_csv], { "type" : "text/csv" }));
+        a.download = document.getElementById("file_name").value + '.csv';
+
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+
+        delete data_csv;//data_csvオブジェクトはもういらないので消去してメモリを開放
+    }
+    //ここまでCSV出力＆ダウンロード
+</script>
