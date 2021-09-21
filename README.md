@@ -4,11 +4,11 @@
 
 ## Menu
 - センサー電力計算ツール ***簡易版*** <br>
-3台のセンサーの各平均消費電力、及び平均消費電力の合計が計算できるツール
+3台のセンサーの各平均消費電力、及び平均消費電力の合計が計算できるツール<br>
 https://tabinohito.github.io/Power-calculation-tool.io/calc_power-consumption.html
 
 - センサー電力計算ツール<br>
-任意の数のセンサーの各平均消費、及び平均消費電力の合計が計算できるツール
+任意の数のセンサーの各平均消費、及び平均消費電力の合計が計算できるツール<br>
 https://tabinohito.github.io/Power-calculation-tool.io/calc_sensor_power-consumption.html
   
 スマートフォン版と、PC版ページに自動遷移するようになっておりますが、遷移しない場合は以下のリンクにアクセスして下さい
