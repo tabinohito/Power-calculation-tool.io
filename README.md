@@ -8,8 +8,11 @@
 https://tabinohito.github.io/Power-calculation-tool.io/calc_power-consumption.html
 
 - センサー電力計算ツール<br>
-任意の数のセンサーの各平均消費、及び平均消費電力の合計が計算できるツール  
-　[PC版](https://tabinohito.github.io/Power-calculation-tool.io/calc_sensor_power-consumption.html)
+任意の数のセンサーの各平均消費、及び平均消費電力の合計が計算できるツール
+https://tabinohito.github.io/Power-calculation-tool.io/calc_sensor_power-consumption.html
+  
+スマートフォン版と、PC版ページに自動遷移するようになっておりますが、遷移しない場合は以下のリンクにアクセスして下さい
+　[PC版](https://tabinohito.github.io/Power-calculation-tool.io/calc_sensor_power-consumption_pc.html)
 　[スマートフォン版](https://tabinohito.github.io/Power-calculation-tool.io/calc_sensor_power-consumption_sp.html)
 ## Usage
 ### センサー電力計算ツール ***簡易版*** <br>
