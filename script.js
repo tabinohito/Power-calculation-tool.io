@@ -22,15 +22,15 @@ window.onload = function(){
                     document.createElement('tr'),
                     document.createElement('tr')
     ]
-    TR_Menue[0].appendChild(add_value_th("電源電圧","input"));
+    TR_Menue[0].appendChild(add_value_th("電源電圧 [V]","input"));
     TR_Menue[0].appendChild(add_textbox("voltage","txt"));
-    TR_Menue[1].appendChild(add_value_th("動作時消費電流","input"));
+    TR_Menue[1].appendChild(add_value_th("動作時消費電流 [mA]","input"));
     TR_Menue[1].appendChild(add_textbox("motion_current","txt"));
-    TR_Menue[2].appendChild(add_value_th("静止時消費電力","input"));
+    TR_Menue[2].appendChild(add_value_th("静止時消費電力 [mA]","input"));
     TR_Menue[2].appendChild(add_textbox("sleep_current","txt")); 
-    TR_Menue[3].appendChild(add_value_th("動作回数/分","input"));
+    TR_Menue[3].appendChild(add_value_th("動作回数/分 [回]","input"));
     TR_Menue[3].appendChild(add_textbox("count","txt"));
-    TR_Menue[4].appendChild(add_value_th("動作時間/回","input"));
+    TR_Menue[4].appendChild(add_value_th("動作時間/回 [milli sec]","input"));
     TR_Menue[4].appendChild(add_textbox("time","txt"));
     var TD_add = document.createElement('td');
     TD_add.appendChild(add_button("add_sensor","計算","add_();","button"));
@@ -53,15 +53,15 @@ window.onload = function(){
     table.appendChild(TR_CHECK);
 
     var TR_FIRST_COL = document.createElement('tr');
-    TR_FIRST_COL.appendChild(add_value_th("電源電圧","main"));
-    TR_FIRST_COL.appendChild(add_value_th("動作時消費電流","main"));
-    TR_FIRST_COL.appendChild(add_value_th("静止時消費電流","main"));
+    TR_FIRST_COL.appendChild(add_value_th("電源電圧 [V]","main"));
+    TR_FIRST_COL.appendChild(add_value_th("動作時消費電流 [mA]","main"));
+    TR_FIRST_COL.appendChild(add_value_th("静止時消費電流 [mA]","main"));
     table.appendChild(TR_FIRST_COL);
 
     var TR_SECOND_COL = document.createElement('tr');
-    TR_SECOND_COL.appendChild(add_value_th("動作回数/分","main"));
-    TR_SECOND_COL.appendChild(add_value_th("動作時間/回","main"));
-    TR_SECOND_COL.appendChild(add_value_th("平均消費電力","main"));
+    TR_SECOND_COL.appendChild(add_value_th("動作回数/分 [回]","main"));
+    TR_SECOND_COL.appendChild(add_value_th("動作時間/回 [sec]","main"));
+    TR_SECOND_COL.appendChild(add_value_th("平均消費電力 [mW]","main"));
     table.appendChild(TR_SECOND_COL);
 
     // 生成したtable要素を追加する
@@ -69,7 +69,7 @@ window.onload = function(){
 
     //subテーブル
     var TR_SUM = document.createElement('tr');
-    var th_SUM = add_value_th("平均消費電力の総和");
+    var th_SUM = add_value_th("合計平均消費電力 [mW]");
     // th_SUM.setAttribute("colspan", "3")
     TR_SUM.appendChild(th_SUM);
     sub_table.appendChild(TR_SUM);
