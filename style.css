@@ -48,6 +48,7 @@
 
   .input{
     margin: 0 0 10px;
+    font-size: 15px;
   }
 
   th.main{
@@ -57,6 +58,7 @@
     border: solid 1px;
     width: 100%;
     height: 100%;
+    
   }
 
   td.main{
@@ -76,16 +78,16 @@
     table-layout: fixed;
     width: 300;
     height: 100%;
-
   }
 
   .main{
     margin: 0 10px 10px;
+    font-size: 12px;
   }
   
   th.sub{
     /* ヘッダ背景塗りつぶし */
-    background: #eee;
+    
     /* 枠線を1本線指定 */
     border: solid 1px;
     width: 100%;
@@ -103,13 +105,16 @@
 
   table.sub{
    /* 枠線を1本線指定 */
-
     border: solid 1px;
     width: 300;
     height: 100%;
+    background-color: #cccccc;
+    
   }
 
   .sub{
     margin: 0 10px 10px;
+    
+    background: #eee;
   }
   
