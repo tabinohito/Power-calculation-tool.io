@@ -32,8 +32,12 @@ window.onload = function(){
     TR_Menue[3].appendChild(add_textbox("count","txt"));
     TR_Menue[4].appendChild(add_value_th("動作時間/回","input"));
     TR_Menue[4].appendChild(add_textbox("time","txt"));
-    TR_Menue[5].appendChild(add_button("add_sensor","計算","add_();","button"));
-    TR_Menue[5].appendChild(add_button("clear","消去","remove_();","button"));
+    var TD_add = document.createElement('td');
+    TD_add.appendChild(add_button("add_sensor","計算","add_();","button"));
+    TR_Menue[5].appendChild(TD_add);
+    var TD_clear = document.createElement('td');
+    TD_clear.appendChild(add_button("clear","消去","remove_();","button"));
+    TR_Menue[5].appendChild(TD_clear);
 
     for(var i = 0;i < TR_Menue.length;i++){
         input_table.appendChild(TR_Menue[i]);
@@ -109,10 +113,8 @@ function remove_(){
     for(let i = 0,j = 0;i < json.length;i++){
         //１つの情報に付き3行で表示しているのでひとまとまりでさようなら～
         if(!json[i].view){
-            console.log(remove_flag.length);
             if(remove_flag[j] != null){
                 if(remove_flag[j].checked){
-                    console.log(j);
                     for(let k = 1;k <= 3;k++){
                         table.deleteRow((j+1) * 3);
                     }
@@ -131,7 +133,7 @@ function remove_(){
     var SUM_PWR = 0;
     for(let i = 0;i < json.length;i++){
         if(json[i]["view"]){
-        SUM_PWR = SUM_PWR + json[i]["平均消費電力"];
+            SUM_PWR = SUM_PWR + json[i]["平均消費電力"];
         }
     }
     TD_SUM.textContent = SUM_PWR;
@@ -139,7 +141,6 @@ function remove_(){
     sub_table.appendChild(TR_SUM);
     // 生成したtable要素を追加する
     document.getElementById("subtable").appendChild(sub_table);
-    // console.log(JSON.stringify(json, null, 2));
 };
 
 function add_table(obj,class_name){
@@ -211,6 +212,7 @@ function add_button(id,value,onclick,class_name){
     button.setAttribute('id',id);
     button.setAttribute('value',value);
     button.setAttribute('onclick',onclick);
+    
     return button;
 }
 
@@ -222,37 +224,37 @@ function add_value_th(text,class_name){
 }
 
 function add_value_td(json,name,class_name){
-var td_value = document.createElement('td');
-td_value.classList.add(class_name);
-td_value.textContent = this.json[this.json.length - 1][name];
-return td_value;
+    var td_value = document.createElement('td');
+    td_value.classList.add(class_name);
+    td_value.textContent = this.json[this.json.length - 1][name];
+    return td_value;
 }
 
 function isEmpty(obj){
-return !Object.keys(obj).length;
+    return !Object.keys(obj).length;
 }
 
 function is_fill_textbox(id){
-if(document.getElementById(id).value == '') {
-    return false; 
-}
-return true;
+    if(document.getElementById(id).value == '') {
+        return false; 
+    }
+    return true;
 };
 
 function clear(id){
-document.getElementById(id).value = '';
+    document.getElementById(id).value = '';
 };
 
 class data{
-constructor(obj){
-    this.voltage = obj["電源電圧"];           
-    this.motion_current = obj["動作時消費電流"] / 1000; //mA -> A
-    this.sleep_current = obj["静止時消費電流"] / 1000; //mA -> A
-    this.count = obj["動作回数/分"];//1秒あたりの動作回数
-    this.time = obj["動作時間/回"] / 1000; //msec -> sec
-    this.motion_time = (this.time * this.count);//動作時間
-    this.sleep_time =  60 - (this.time * this.count);//静止時間
-};
+    constructor(obj){
+        this.voltage = obj["電源電圧"];           
+        this.motion_current = obj["動作時消費電流"] / 1000; //mA -> A
+        this.sleep_current = obj["静止時消費電流"] / 1000; //mA -> A
+        this.count = obj["動作回数/分"];//1秒あたりの動作回数
+        this.time = obj["動作時間/回"] / 1000; //msec -> sec
+        this.motion_time = (this.time * this.count);//動作時間
+        this.sleep_time =  60 - (this.time * this.count);//静止時間
+    };
 
     ElectoricPower_motion(){ return this.voltage * this.motion_current; };
     ElectoricPower_all_motion(){ return this.ElectoricPower_motion() * this.motion_time; };
