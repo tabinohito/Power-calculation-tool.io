@@ -125,22 +125,25 @@ function remove_(){
         }
     }
 
-    //subテーブル
-    var TR_SUM = document.createElement('tr');
-    var TD_SUM = document.createElement('td');
-    sub_table.deleteRow(-1);
-    TD_SUM.classList.add("sub");
-    var SUM_PWR = 0;
-    for(let i = 0;i < json.length;i++){
-        if(json[i]["view"]){
-            SUM_PWR = SUM_PWR + json[i]["平均消費電力"];
+    if(sub_flag){
+        //subテーブル
+        var TR_SUM = document.createElement('tr');
+        var TD_SUM = document.createElement('td');
+        sub_table.deleteRow(-1);
+        TD_SUM.classList.add("sub");
+        var SUM_PWR = 0;
+        for(let i = 0;i < json.length;i++){
+            if(json[i]["view"]){
+                SUM_PWR = SUM_PWR + json[i]["平均消費電力"];
+            }
         }
-    }
-    TD_SUM.textContent = SUM_PWR;
-    TR_SUM.appendChild(TD_SUM);
-    sub_table.appendChild(TR_SUM);
-    // 生成したtable要素を追加する
-    document.getElementById("subtable").appendChild(sub_table);
+        TD_SUM.textContent = SUM_PWR;
+        TR_SUM.appendChild(TD_SUM);
+        sub_table.appendChild(TR_SUM);
+        // 生成したtable要素を追加する
+        document.getElementById("subtable").appendChild(sub_table);
+    }    
+
 };
 
 function add_table(obj,class_name){
@@ -169,7 +172,7 @@ function add_table(obj,class_name){
     var TR_SUM = document.createElement('tr');
     var TD_SUM = document.createElement('td');
     if(sub_flag){
-    sub_table.deleteRow(-1);
+        sub_table.deleteRow(-1);
     }
     sub_flag = true;          
     TD_SUM.classList.add("sub");
