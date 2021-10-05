@@ -40,10 +40,7 @@ res_4 → <br>
 <br>
 の項目に計算結果が反映される
 
-### センサー電力計算ツール <br>
-以下に示す写真のように、初期値としてデータが入力されている
-![tool](https://github.com/tabinohito/Power-calculation-tool.io/blob/images/images/tool-menu.jpg)
-
+### センサー電力計算ツール<br>
 #### 各項目の説明 <br>
 - 電源電圧 **[V]**<br>
 センサーのに与える電源の電圧
@@ -57,14 +54,23 @@ res_4 → <br>
 - 動作時間/回　**[milli sec]**<br>
 1度センサーが動作したときに、動作が継続する時間 <br>
 連続して動作する場合は、60000となる <br>
-- 計算
+- 計算<br>
 各項目への入力が完了した後、このボタンを押すことで計算結果を反映できる <br>
-反映後は以下のようになる <br>
-![入力後](https://github.com/tabinohito/Power-calculation-tool.io/blob/images/images/入力後.jpg)
 - 消去
-以下のように、データを選択し、削除ボタンを押す
-![選択後](https://github.com/tabinohito/Power-calculation-tool.io/blob/images/images/選択済み.jpg)
-
-- csvファイルダウンロード　<br>
+データを選択し削除ボタンを押すことで、データを削除することができる <br>
+- csvファイルダウンロード (PC版のみ)　<br>
 記入済みのデータをcsv形式でダウンロードする <br>
 その際、横のテキストボックスでファイル名を指定できる <br>
+
+###  【PC版】 
+以下に示す写真のように、初期値としてデータが入力されている
+![tool](https://github.com/tabinohito/Power-calculation-tool.io/blob/images/images/tool-menu.jpg)
+反映後は以下のようになる <br>
+![入力後](https://github.com/tabinohito/Power-calculation-tool.io/blob/images/images/入力後.jpg)
+以下のように、データを選択し、削除ボタンを押すことでデータを削除することができる
+![選択後](https://github.com/tabinohito/Power-calculation-tool.io/blob/images/images/選択済み.jpg)
+
+
+
+### 【スマートフォン版】
+
