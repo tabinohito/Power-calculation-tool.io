@@ -30,7 +30,7 @@ window.onload = function(){
     TR_Menue[2].appendChild(add_textbox("sleep_current","txt")); 
     TR_Menue[3].appendChild(add_value_th("動作回数/分 [回]","input"));
     TR_Menue[3].appendChild(add_textbox("count","txt"));
-    TR_Menue[4].appendChild(add_value_th("動作時間/回 [milli sec]","input"));
+    TR_Menue[4].appendChild(add_value_th("動作時間/回 [sec]","input"));
     TR_Menue[4].appendChild(add_textbox("time","txt"));
     var TD_add = document.createElement('td');
     TD_add.appendChild(add_button("add_sensor","計算","add_();","button"));
