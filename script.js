@@ -81,7 +81,7 @@ function add_(){
     if(is_fill_textbox("voltage") && is_fill_textbox("motion_current") && is_fill_textbox("sleep_current") && is_fill_textbox("count")  && is_fill_textbox("time")){
         var obj = {"view":true,
                 "電源電圧":document.getElementById("voltage").value ,
-                "動作時消費電流":document.getElementById("motion_current").value * 1000 , 
+                "動作時消費電流":document.getElementById("motion_current").value , 
                 "静止時消費電流":document.getElementById("sleep_current").value ,
                 "動作回数/分":document.getElementById("count").value , 
                 "動作時間/回":document.getElementById("time").value
